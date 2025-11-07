@@ -13,4 +13,5 @@ jobs:
       inputs:
         provider: 'azurerm'
         command: 'plan'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/env/dev'
         environmentServiceNameAzureRM: 'infra-service-connection'

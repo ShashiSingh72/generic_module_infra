@@ -9,4 +9,8 @@ jobs:
       inputs:
         terraformVersion: 'latest'
 
-    
+    - task: TerraformTask@5
+      inputs:
+        provider: 'azurerm'
+        command: 'plan'
+        environmentServiceNameAzureRM: 'infra-service-connection'

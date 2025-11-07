@@ -1,27 +1,28 @@
 trigger: none
 
 pool: dev-infra-pool
-jobs:
-  - job: build
-    displayName: Terraform_init
-    steps:
-    - task: TerraformInstaller@1
-      inputs:
-        terraformVersion: 'latest'
+stages: 
+- stage: Build
+  displayName: Terraform_install
 
-    - task: TerraformTask@5
-      inputs:
-        provider: 'azurerm'
-        command: 'init'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/env/dev'
-        backendServiceArm: 'infra-service-connection'
-        backendAzureRmStorageAccountName: 'backendstg02'
-        backendAzureRmContainerName: 'strg'
-        backendAzureRmKey: 'terraform.tfstate'
+  jobs:
+    - job: build
+      displayName: Terraform_init
+      steps:
+      - task: TerraformInstaller@1
+        inputs:
+          terraformVersion: 'latest'
 
-    - task: TerraformTask@5
-      inputs:
-        provider: 'azurerm'
-        command: 'plan'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/env/dev'
-        environmentServiceNameAzureRM: 'infra-service-connection'
+- stage: Terraform_init
+  jobs:
+    - job: initjob
+      steps: 
+      - task: TerraformTask@5
+        inputs:
+          provider: 'azurerm'
+          command: 'init'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/env/dev'
+          backendServiceArm: 'infra-service-connection'
+          backendAzureRmStorageAccountName: 'backendstg02'
+          backendAzureRmContainerName: 'strg'
+          backendAzureRmKey: 'terraform.tfstate'

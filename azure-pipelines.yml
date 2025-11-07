@@ -1,0 +1,12 @@
+trigger: none
+
+pool: dev-infra-pool
+jobs:
+  - job: build
+    displayName: Terraform_init
+    steps:
+    - task: TerraformInstaller@1
+      inputs:
+        terraformVersion: 'latest'
+
+    

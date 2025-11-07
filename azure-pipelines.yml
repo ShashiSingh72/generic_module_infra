@@ -12,6 +12,16 @@ jobs:
     - task: TerraformTask@5
       inputs:
         provider: 'azurerm'
+        command: 'init'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/env/dev'
+        backendServiceArm: 'infra-service-connection'
+        backendAzureRmStorageAccountName: 'backendstg02'
+        backendAzureRmContainerName: 'strg'
+        backendAzureRmKey: 'terraform.tfstate'
+
+    - task: TerraformTask@5
+      inputs:
+        provider: 'azurerm'
         command: 'plan'
         workingDirectory: '$(System.DefaultWorkingDirectory)/env/dev'
         environmentServiceNameAzureRM: 'infra-service-connection'
